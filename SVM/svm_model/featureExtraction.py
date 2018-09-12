@@ -10,8 +10,6 @@ import time
 
 class FeatureExtraction :
 
-    feature_data = []
-
     '''
     A class to extract features from data set: the words
     '''
