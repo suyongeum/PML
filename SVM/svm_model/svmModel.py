@@ -15,6 +15,27 @@ class SVMmodel :
 
         self.crossValidation()
 
+    def runSVM(self):
+        # defining SVM
+        ssc = StandardScaler()
+        ssc.fit(x_train)
+        x_train_std = ssc.transform(x_train)
+        x_test_std  = ssc.transform(x_test)
+
+        model = SVC(kernel='rbf', random_state=None)
+        model.fit(x_train_std, t_train)
+
+        # training datas
+        expectation  = model.predict(x_train_std)
+        accuracy     = accuracy_score(t_train, expectation)
+        print('Accuracy of Training： %.2f' % accuracy)
+
+        # test datas
+        pred_test = model.predict(x_test_std)
+        accuracy_test = accuracy_score(t_test, pred_test)
+        print('Accuracy of Test： %.2f' % accuracy_test)
+
+
     def crossValidation(self) :
 
         # index information
@@ -34,24 +55,7 @@ class SVMmodel :
         # # t = f(x)
         # x_train, x_test, t_train, t_test = train_test_split(tChara, self.difficulty, test_size=0.3, random_state=None)
         #
-        # # defining SVM
-        # ssc = StandardScaler()
-        # ssc.fit(x_train)
-        # x_train_std = ssc.transform(x_train)
-        # x_test_std  = ssc.transform(x_test)
-        #
-        # model = SVC(kernel='rbf', random_state=None)
-        # model.fit(x_train_std, t_train)
-        #
-        # # training datas
-        # expectation  = model.predict(x_train_std)
-        # accuracy     = accuracy_score(t_train, expectation)
-        # print('Accuracy of Training： %.2f' % accuracy)
-        #
-        # # test datas
-        # pred_test = model.predict(x_test_std)
-        # accuracy_test = accuracy_score(t_test, pred_test)
-        # print('Accuracy of Test： %.2f' % accuracy_test)
+
 
 if __name__ == '__main__' :
     SVMmodel()
