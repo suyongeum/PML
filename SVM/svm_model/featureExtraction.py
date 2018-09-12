@@ -63,10 +63,10 @@ class FeatureExtraction :
         partOfSpeech = []
 
         #preparing category of simplified parts of speech
-        noun = ('NN', 'NNS', 'NP')
+        noun = ('NN', 'NNS', 'NP', 'IN', 'CD', 'FW', 'CC', 'UH')
         adj  = ('JJ', 'JJR', 'JJS')
-        verb = ('RP', 'VB', 'VBD', 'VBG', 'VBN', 'VBZ', 'VBP', 'VD', 'VDD', 'VDG', 'VDN', 'VDZ', 'VDP', 'VH', 'VHD', 'VHG', 'VHN', 'VHZ', 'VHP', 'VV', 'VVD', 'VVG', 'VVN', 'VVP', 'VVZ')
-        adv  = ('RB', 'RBR', 'RBS')
+        verb = ('RP', 'VB', 'VBD', 'VBG', 'VBN', 'VBZ', 'VBP', 'VD', 'VDD', 'VDG', 'VDN', 'VDZ', 'VDP', 'VH', 'VHD', 'VHG', 'VHN', 'VHZ', 'VHP', 'VV', 'VVD', 'VVG', 'VVN', 'VVP', 'VVZ', 'POS')
+        adv  = ('RB', 'RBR', 'RBS', 'WDT', 'DT', 'WP', 'MD', 'TO')
 
         for i in range(len(self.feature_data)):
             tag = a[i][1]
@@ -76,7 +76,6 @@ class FeatureExtraction :
                     partOfSpeech.append(1)
                     done = True
                     break
-
             for j in adj :
                 if done == True:
                     break
@@ -84,7 +83,6 @@ class FeatureExtraction :
                     partOfSpeech.append(3)
                     done = True
                     break
-
             for v in verb :
                 if done == True:
                     break
@@ -99,9 +97,13 @@ class FeatureExtraction :
                     partOfSpeech.append(7)
                     done = True
                     break
+            if done == False:
+                print(a[i][0] , '-' , a[i][1])
+                partOfSpeech.append(10)
         #######################################################################################
-        #print(len(partOfSpeech)) --------------------------------------------
-        #self.feature_data["pos"] = partOfSpeech
+        print(len(partOfSpeech))
+        print(len(self.feature_data))
+        self.feature_data["pos"] = partOfSpeech
 
     # scrapping bing - one request takes around 1 second. so 11999 seconds ...
     def scraping_bing(self):
@@ -202,111 +204,3 @@ if __name__ == '__main__' :
     # print(features.feature_data.head())
 
 
-
-#     def categorizingIntoSpeech(self) :
-#         import treetaggerwrapper as ttw
-#
-#         # preparing category of simplified parts of speech
-#         noun = ('NN', 'NNS', 'NP')
-#         adj  = ('JJ', 'JJR', 'JJS')
-#         verb = ('RP', 'VB', 'VBD', 'VBG', 'VBN', 'VBZ', 'VBP', 'VD', 'VDD', 'VDG', 'VDN', 'VDZ', 'VDP', 'VH', 'VHD', 'VHG', 'VHN', 'VHZ', 'VHP', 'VV', 'VVD', 'VVG', 'VVN', 'VVP', 'VVZ')
-#         adv  = ('RB', 'RBR', 'RBS')
-#
-#         tagger   = ttw.TreeTagger(TAGLANG='en', TAGDIR='../')
-#         tagnum   = np.zeros(len(self.test))
-#
-#         for i, t in zip(range(len(self.test)), self.test) :
-#             tags = tagger.TagText(t[1])
-#
-#             for n in noun :
-#                 if n in tags[0] :
-#                     tagnum[i] = 1
-#                     continue
-#
-#             for j in adj :
-#                 if j in tags[0] :
-#                     tagnum[i] = 3
-#                     continue
-#
-#             for v in verb :
-#                 if v in tags[0] :
-#                     tagnum[i] = 5
-#                     continue
-#
-#             for av in adv :
-#                 if av in tags[0] :
-#                     tagnum[i] = 7
-#                     continue
-#
-#
-#         return tagnum
-#
-#     def searchingWeblio(self) :
-#         # close explanation is in WeblioLevel()
-#         weblio = np.loadtxt('./level.csv')
-#
-#         return weblio
-#
-# class WeblioLevel() :
-#     '''
-#     A class for getting 'level' from Weblio
-#     Weblio : https://ejje.weblio.jp/
-#     '''
-#     def __init__(self, start, file) :
-#         from selenium import webdriver
-#         from selenium.common.exceptions import TimeoutException
-#         import csv, sys, io, time
-#
-#         # Loading dataset
-#         f    = open('./test.csv', 'r')
-#         t = csv.reader(f, delimiter=' ')
-#         self.test = list(t)
-#
-#         # Picking only words as list
-#         self.words = [t[1] for t in self.test]
-#
-#         self.pickingLevel(start, file)
-#
-#     def pickingLevel(self, start, file) :
-#         # Using Chrome
-#         driver = webdriver.Chrome()
-#         # timeout deadline is 10 sec
-#         driver.set_page_load_timeout(10)
-#
-#         for i, w in zip(range(len(self.words))[start:], self.words[start:]) :
-#             print(w)
-#             #return
-#
-#             # accessing Weblio
-#             while True :
-#                 page = 'https://ejje.weblio.jp/content/' + w
-#                 print(page)
-#                 try :
-#                     # moving to the URL
-#                     driver.get(page)
-#                     break
-#
-#                 except TimeoutException :
-#                     # if timeout, reload
-#                     print('timeout')
-#                     continue
-#
-#             # getting 'level' from HTML
-#             try :
-#                 html      = driver.find_element_by_class_name('learning-level-content').text
-#                 level     = int(html)
-#             except :
-#                 # if not found
-#                 print("level not found...")
-#                 level     = 0
-#
-#             # saving level as s csv and update the csv everytime
-#             paper  = np.loadtxt('./levels/level' + str(file) + '.csv')
-#             result = np.hstack((paper, level))
-#             np.savetxt('./levels/level' + str(file) + '.csv', result)
-#
-#             # process log
-#             print("score : %d" % level)
-#             print("Completed %d/%d" % (i, len(self.words)))
-#
-#         driver.close()
