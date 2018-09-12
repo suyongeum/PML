@@ -1,0 +1,5 @@
+DB_HOST     = 'localhost'
+DB_USER     = 'root'
+DB_PASS     = 'root'
+DB_NAME     = 'pml_db'
+DB_CHAR     = 'utf8mb4'

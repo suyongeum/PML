@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Support Vector Machine (SVM){% endblock %}
+
+{% block content %}
+
+   <section class="section-main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="user-text-block">
+                        <textarea id="text" class="form-control user-text-textarea mousetrap"
+                                  placeholder="Enter text"></textarea>
+                    </div>
+                    <div class="button-block">
+                        <button id="check-btn" class="btn btn-success" title="Check">
+                            Check
+                        </button>
+                        <button id="clear-btn" class="btn btn-clear" title="Clear">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                         <div id="result" class="result-text-block">
+                         </div>
+                    </div>
+                <div class="col-md-1"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="static/svm.js"></script>
+
+{% endblock %}
