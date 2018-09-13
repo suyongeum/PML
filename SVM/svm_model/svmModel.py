@@ -4,6 +4,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.externals import joblib
+from enum import Enum as enum
 
 class SVMmodel:
 
@@ -27,7 +28,12 @@ class SVMmodel:
         self.labels = features.iloc[1:, 2]
         #           4       5          6             7            8          9           10          11             12         13
         #features['len', 'vrlen', 'freq_brown', 'freq_reuter', 'weblio', 'bing_log', 'yahoo_log', 'google_log', 'freq_guten','pos']
-        self.features = features.iloc[1:, [4, 5, 8, 11, 12, 13]]
+
+        print(features.iloc[0, :])
+
+        self.features = features.iloc[1:, ['len', 'vrlen', 'weblio', 'google_log', 'freq_guten', 'pos']]
+        #self.features = features.iloc[1:, ['len', 'vrlen', 'weblio', 'google_log', 'freq_guten', 'pos']]
+        #self.features = features.iloc[1:, [4, 5, 8, 11, 12, 13]]
 
     def greedSearch(self):
         tuned_parameters = [
@@ -62,7 +68,7 @@ class SVMmodel:
 if __name__ == '__main__' :
 
     svmModel = SVMmodel()
-    svmModel.greedSearch() # Parameter search and save the model
+    #svmModel.greedSearch() # Parameter search and save the model
     # svmModel.makeSVMpickle()  # Parameter search
     # svmModel.predictSVM([[10.00,5.00,5.00,0.00,0.00,6.00]])
     # print(svmModel.word_tagging())
