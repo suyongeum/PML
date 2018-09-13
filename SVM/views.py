@@ -4,7 +4,8 @@ from PML.nlp.Lemmatiser import Lemmatiser
 from PCA.models import Word
 import re
 import random
-#from SVM.svm_model.difficulty_prediction import SVM_prediction
+
+from sklearn.externals import joblib
 
 # Create your views here.
 
@@ -23,7 +24,6 @@ def check(request):
     # 4. Difficulty level check from DB
     # 5. If does not exist, classify using SVM result.
     ########################################################################
-
     # 1. Tokenize the sentence
     # 2. Recover the original form of each word
 
@@ -31,8 +31,8 @@ def check(request):
     lemmas = lemmatiser.lemmatise_sentence(text)
     print(lemmas)
 
+    ########################################################################
     # 3. Get rid of special character
-
     # 4. Difficulty level check from DB
     found = []
     not_found = []
@@ -56,13 +56,43 @@ def check(request):
                 found.append([obj.first().word, obj.first().difficulty])
                 print("found: ", word)
     ########################################################################
+    # 5. If does not exist, classify using SVM result.
+    # 5-1. Feature extraction
 
-    # svm_estimation = SVM_prediction(['panda', 'mathematics'])
-    # svm_estimation.prediction()
+    svmModel = joblib.load('PML/pickled/svm.sav')
+    print(svmModel.predict([[10.00,5.00,5.00,0.00,0.00,6.00]]))
 
 
     response = {'not_found': not_found, 'found': found}
-    #response = {'found': found}
     return JsonResponse(response)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
