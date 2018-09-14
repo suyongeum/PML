@@ -37,14 +37,14 @@ new_features = trainingdata
 
 new_features['len'] = data_one['length']
 new_features['vrlen'] = data_one['vowel']/data_one['length']
-new_features['freq_brown'] = data_one['hitBrown']
-new_features['freq_reuter'] = data_one['hitReuter']
+new_features['brownfq'] = data_one['hitBrown']
+new_features['reuterfq'] = data_one['hitReuter']
 new_features['weblio'] = sorted_data_two['learning_level']
-new_features['bing_log'] = sorted_data_two['site_num_log_bing']
-new_features['yahoo_log'] = sorted_data_two['site_num_log_yahoo']
-new_features['google_log'] = sorted_data_two['site_num_log_google']
+new_features['binglog'] = sorted_data_two['site_num_log_bing']
+new_features['yahoolog'] = sorted_data_two['site_num_log_yahoo']
+new_features['googlelog'] = sorted_data_two['site_num_log_google']
 
-new_features.to_csv('base_extracted_features.csv')
+new_features.to_csv('base_extracted_features.csv', index=False)
 
 print(new_features.head())
 

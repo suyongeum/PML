@@ -7,19 +7,15 @@ import math
 import random
 import re
 import time
-import os
 
-class FeatureExtraction :
+class AllFeatureCalculation :
 
     '''
     A class to extract features from data set: the words
     '''
     def __init__(self) :
         # Data reading from file and label the two columns: difficulty and word
-        # trainingdata = pd.read_csv('data_panda.csv', encoding="shift-jis", header=None, names=('difficulty', 'word'),
-        #                         keep_default_na=False)
-        dir_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-        base_features = pd.read_csv(os.path.join(dir_path, 'svm_model\\featureExtraction_for_training\\base_extracted_features.csv'), encoding="shift-jis", keep_default_na=False)
+        base_features = pd.read_csv('./base_extracted_features.csv', keep_default_na=False)
         self.feature_data = base_features
 
     def word_and_vowel_length(self):
@@ -45,7 +41,7 @@ class FeatureExtraction :
     # Basically we use Gutenberg corpus
     def word_couting(self):
         datasets = nltk.corpus.gutenberg.fileids()
-        self.feature_data['freq_guten'] = 0
+        self.feature_data['gutenfq'] = 0
 
         # This routine takes a bit of time: 2 minutes in the desktop machine.
         total_freq = [0]*len(self.feature_data)
@@ -56,11 +52,12 @@ class FeatureExtraction :
             for w in self.feature_data['word']:
                 word_freq.append(fdist[w])
             total_freq = list(map(add, total_freq, word_freq))
-        self.feature_data['freq_guten'] = total_freq
+        self.feature_data['gutenfq'] = total_freq
 
     # tagging words
     def word_tagging(self):
         a = nltk.pos_tag(self.feature_data["word"])
+
         partOfSpeech = []
 
         #preparing category of simplified parts of speech
@@ -182,7 +179,7 @@ if __name__ == '__main__' :
     # 7. yahoo_log
     # 8. google_log
 
-    features = FeatureExtraction()
+    features = AllFeatureCalculation()
     print(features.feature_data.head())
 
     # Let's add
@@ -198,6 +195,7 @@ if __name__ == '__main__' :
     print(features.feature_data.head())
 
     # Let's save it into total features...
+    # BTW we do not use all features, we will selectively use some of them
 
-    features.feature_data.to_csv('total_extracted_features.csv')
+    features.feature_data.to_csv('total_extracted_features.csv', index=False)
 
