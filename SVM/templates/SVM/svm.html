@@ -4,8 +4,53 @@
 
 {% block content %}
 
-   <section class="section-main">
+        <section class="section-main">
         <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-1">
+
+                </div>
+                <div class="col-md-10">
+                    <p>
+                        Classification of English words in terms of their difficulty levels. We are expected to classify English words
+                        in terms of their difficult levels. The data set include 11,998 English words which has 12 classes: 1(easy) to 12(difficult).
+                        Feature Engineering is carried out to search effective features that well represent difficulty levels of the English words.
+                        Then, <code>Support Vector Machine (SVM)</code> finds decision boundary of the classification problem.
+                    </p>
+                    <p>
+                        Support Vector Machine (SVM)
+                    </p>
+                    <dl>
+                        <dt>SVM: RBF Kernel function </dt>
+                            <dd><pre> SVC</pre></dd>
+                        <dt>Features: </dt>
+                            <dd>- Lenth</dd>
+                            <dd>- Vowel ration to the length of word</dd>
+                            <dd>- Popularity from google search result</dd>
+                            <dd>- Frequency appeared on Gutenberg corporal</dd>
+                            <dd>- Position of Speech</dd>
+                    </dl>
+                </div>
+                <div class="col-md-1">
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+   <section class="section-demo">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                     <dl>
+                        <dt><h4>Demo: please write down a short English sentence</h4></dt>
+{#                            <dd>- Lenth</dd>#}
+                    </dl>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
@@ -15,7 +60,7 @@
                     </div>
                     <div class="button-block">
                         <button id="check-btn" class="btn btn-success" title="Check">
-                            Check
+                            Click
                         </button>
                         <button id="clear-btn" class="btn btn-clear" title="Clear">
                             Clear
@@ -28,12 +73,26 @@
             <div class="row">
                 <div class="col-md-1"></div>
                     <div class="col-md-10">
-                         <div id="result" class="result-text-block">
+                    <div id="result" class="result-text-block">
                          </div>
                     </div>
                 <div class="col-md-1"></div>
             </div>
 
+        </div>
+    </section>
+
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div clss="col-md-1"></div>
+                <div clss="col-md-10">
+                    <div id="pca_plot" class="result-text-block">
+
+                    </div>
+                </div>
+                <div clss="col-md-1"></div>
+            </div>
         </div>
     </section>
 
