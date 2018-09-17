@@ -38,20 +38,29 @@ $(function () {
     function setResult(value) {
         //resultBlock.removeClass('placeholder');
 
-        var html = '<dl><dt>Difficulty level found from DB</dt>';
+        var html = '<dl><dt>Fixed difficulty level</dt><dd>';
         console.log(value.found);
         for (var i=0; i<value.found.length; i++) {
-            html += '<dd>' + value.found[i][0] + ' ' + value.found[i][1] + '</dd>';
+            if (i===0) {
+                html +=  value.found[i][0] + '(' + value.found[i][1] + ')';
+            } else {
+                html +=  ', ' + value.found[i][0] + '(' + value.found[i][1] + ')';
+            }
         }
+        html += '</dd>';
 
         console.log(html);
 
-        html += '<dt>Difficulty level inferred from SVM</dt>';
+        html += '<dt>Estimated difficulty level</dt><dd>';
         console.log(value.not_found);
-        for (var i=0; i<value.not_found.length; i++) {
-            html += '<dd>' + value.not_found[i][0] + ' ' + value.not_found[i][1] + '</dd>';
+        for (i=0; i<value.not_found.length; i++) {
+            if (i===0) {
+                html +=  value.not_found[i][0] + '(' + value.not_found[i][1] + ')';
+            } else {
+                html +=  ', ' + value.not_found[i][0] + '(' + value.not_found[i][1] + ')';
+            }
         }
-        html += '</dl>'
+        html += '</dd></dl>';
 
         resultBlock.html(html);
     }

@@ -33,12 +33,15 @@ def check(request):
     lemmas = lemmatiser.lemmatise_sentence(text)
     print(lemmas)
 
+    lemmas_ = list(set(lemmas))
+    print(lemmas_)
+
     ########################################################################
     # 3. Get rid of special character
     # 4. Difficulty level check from DB
     found = []
     not_found = []
-    for word in lemmas:
+    for word in lemmas_:
         # DB check
         obj = Word.objects.filter(word=word)
         if obj.count() == 0:
@@ -70,6 +73,10 @@ def check(request):
 
         word = item[0]
         difficulty = item[1]
+
+        print("------------------------------------------------")
+        print("Not found word:", word)
+        print("------------------------------------------------")
 
         # feature extraction
         start = time.clock()
@@ -105,6 +112,7 @@ def check(request):
     # if not found and not_found_:
     #     pass
     # else:
+
     response = {'not_found': not_found_, 'found': found}
     return JsonResponse(response)
 
