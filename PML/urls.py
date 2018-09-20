@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^pca/', include('PCA.urls')),
     url(r'^svm/', include('SVM.urls')),
+    url(r'^cnn/', include('CNN.urls')),
 ]
