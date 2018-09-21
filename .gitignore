@@ -17,3 +17,9 @@
 
 # some data files
 **/word_data/*
+
+# big data file
+**/vgg19/*
+
+# image files
+**/style/*

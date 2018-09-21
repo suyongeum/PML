@@ -6,7 +6,7 @@ app_name = 'CNN'
 
 urlpatterns = [
     url(r'^$', views.cnn, name='cnn'),
-    #url(r'predict/', views.predict, name='predict'),
+    url(r'change/', views.change, name='change'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

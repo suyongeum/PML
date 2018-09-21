@@ -1,23 +1,96 @@
 {% extends 'base.html' %}
 
-{% block title %}Convolutional Neural Networks (CNN){% endblock %}
+{% block title %}Convolutional Neural Network (CNN){% endblock %}
 
 {% block content %}
+
+    <script src="static/js/dropzone.js"></script>
+    <link href="static/css/dropzone.css" rel="stylesheet">
 
     <section class="section-main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-1"></div>
+                <div class="col-md-1">
+
+                </div>
                 <div class="col-md-10">
                     <p>
-                        Convolutional Neural Network (CNN)
+                        <code>Convolutional Neural Networks (CNN)</code> has been used for image classification. Well, image classification is interesting but let's
+                        do more interesting stuff, which is style transfer. In this demo...
                     </p>
+                    <p>
+                        The process of generating the figure is as follows:
+                    </p>
+                    <dl>
+                        <dt>SVD decomposition: </dt>
+                            <dd><pre> U. S. V = svd()</pre></dd>
+                        <dt>Projection: </dt>
+                            <dd>- Project on the space</dd>
+                    </dl>
                 </div>
-                <div class="col-md-1"></div>
+                <div class="col-md-1">
+
+                </div>
             </div>
         </div>
     </section>
 
+    <section class="section-graph">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="block">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                      <div class="panel panel-default">
+                            <div class="panel-heading"><strong>Upload Files</strong> <small>Drag and drop a photo below</small></div>
+                            <div class="panel-body">
 
+                                {###################################################################### dropzone code #}
+{#                                <form action="/file-upload" class="dropzone" id="drop-zone"></form>#}
+
+                                  <form action="/upload" class="dropzone" drop-zone="" id="file-dropzone">
+                                    {%csrf_token%}
+                                    <div class="dz-message text-center alert alert-danger">
+                                        Drop your photo or click here
+                                    </div>
+
+                                  </form>
+
+                                  <div class="upload-progress text-center alert alert-warning">
+{#                                        <h3><i class="fa fa-refresh fa-spin"></i><strong> 파일을 압축중 입니다.</strong></h3>#}
+                                      Photo style changing
+                                  </div>
+
+                                  <div class="resize-image text-center alert alert-success">
+                                      <div class="text-center">
+                                            <button type="button" class="btn btn-lg btn-primary" filename="" onclick="downImage()" id="image-down">Download</button>
+                                      </div>
+                                  </div>
+
+                                  <div id="banner-preview" class="dropzone-previews hide"></div>
+
+                                  <h3>Preview photo</h3>
+                                  <div class="image-preview">
+                                        <img src="" id="preview-img">
+                                  </div>
+
+                                {####################################################################### dropzone code #}
+
+                            </div>
+                      </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+                <div class="col-md-1">
+                    <div class="block">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="static/cnn.js"></script>
 
 {% endblock %}
