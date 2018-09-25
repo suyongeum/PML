@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.http import HttpResponse
+from django.core.files.storage import FileSystemStorage
+import os
 
-from PIL import Image
+from CNN.cnn_model.run_main import main as run_style
+
+import CNN.cnn_model.style_transfer
 
 # Create your views here.
 
@@ -11,13 +14,36 @@ def cnn(request):
 
 def change(request):
 
+    ########################################################################
 
-    html = "hello word"
+    if request.method == 'POST' and request.FILES['origin']:
+        myfile = request.FILES['origin']
+        fs = FileSystemStorage('./bssets/inputs/') #defaults to   MEDIA_ROOT
+        filename = fs.save(myfile.name, myfile)
+        ###############################################################
+        # Here we know the file
 
-    return HttpResponse(html)
+        content = './bssets/inputs/' + filename
+        style   = './CNN/cnn_model/style/starry-night.jpg'
+        output  = './bssets/outputs/output.jpg'
 
-    #return render(request, html)
-    #
-    # response = {'image': image}
-    #
-    # return JsonResponse(response)
+        cmd = 'python ./CNN/cnn_model/run_main.py --content ' + content +  ' --style ' + style + ' --output ' + output
+        print(cmd)
+        os.system(cmd)
+        # print(returned_output)
+
+        ###############################################################
+        # Logic to display in the web
+
+
+        file_url = fs.url(filename)
+        print(file_url)
+        response = {'image': file_url}
+        return JsonResponse(response)
+    else:
+        image = ""
+        response = {'image': image}
+        return JsonResponse(response)
+    ########################################################################
+
+

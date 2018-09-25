@@ -1,18 +1,19 @@
-import tensorflow as tf
-import numpy as np
-import utils
-import vgg19
-import style_transfer
+import argparse
 import os
 
-import argparse
+import numpy as np
+import tensorflow as tf
+
+import CNN.cnn_model.style_transfer as style_transfer
+import CNN.cnn_model.utils as utils
+import CNN.cnn_model.vgg19 as vgg19
 
 """parsing and configuration"""
 def parse_args():
     desc = "Tensorflow implementation of 'Image Style Transfer Using Convolutional Neural Networks"
     parser = argparse.ArgumentParser(description=desc)
 
-    parser.add_argument('--model_path', type=str, default='pre_trained_model', help='The directory where the pre-trained model was saved')
+    parser.add_argument('--model_path', type=str, default='vgg19', help='The directory where the pre-trained model was saved')
     parser.add_argument('--content', type=str, default='images/tubingen.jpg', help='File path of content image (notation in the paper : p)', required = True)
     parser.add_argument('--style', type=str, default='images/starry-night.jpg', help='File path of style image (notation in the paper : a)', required = True)
     parser.add_argument('--output', type=str, default='result.jpg', help='File path of output image', required = True)
@@ -28,9 +29,9 @@ def parse_args():
                         help='Style loss for each content is multiplied by corresponding weight')
 
     parser.add_argument('--initial_type', type=str, default='content', choices=['random','content','style'], help='The initial image for optimization (notation in the paper : x)')
-    parser.add_argument('--max_size', type=int, default=300, help='The maximum width or height of input images')
+    parser.add_argument('--max_size', type=int, default=250, help='The maximum width or height of input images')
     parser.add_argument('--content_loss_norm_type', type=int, default=3, choices=[1,2,3], help='Different types of normalization for content loss')
-    parser.add_argument('--num_iter', type=int, default=100, help='The number of iterations to run')
+    parser.add_argument('--num_iter', type=int, default=10, help='The number of iterations to run')
 
     return check_args(parser.parse_args())
 
@@ -53,7 +54,7 @@ def check_args(args):
         print ('Too small size')
         return None
 
-    model_file_path = args.model_path + '/' + vgg19.MODEL_FILE_NAME
+    model_file_path = './CNN/cnn_model/' + args.model_path + '/' + vgg19.MODEL_FILE_NAME
     try:
         assert os.path.exists(model_file_path)
     except:
@@ -99,12 +100,14 @@ def main():
         exit()
 
     # initiate VGG19 model
-    model_file_path = args.model_path + '/' + vgg19.MODEL_FILE_NAME
+    #model_file_path = args.model_path + '/' + vgg19.MODEL_FILE_NAME
+    model_file_path = './CNN/cnn_model/' + args.model_path + '/' + vgg19.MODEL_FILE_NAME
+
     vgg_net = vgg19.VGG19(model_file_path)
 
     # load content image and style image
     content_image = utils.load_image(args.content, max_size=args.max_size)
-    style_image = utils.load_image(args.style, shape=(content_image.shape[1],content_image.shape[0]))
+    style_image = utils.load_image(args.style, shape=(content_image.shape[1], content_image.shape[0]))
 
     # initial guess for output
     if args.initial_type == 'content':
@@ -154,7 +157,7 @@ def main():
     result_image = np.reshape(result_image,shape[1:])
 
     # save result
-    utils.save_image(result_image,args.output)
+    utils.save_image(result_image, args.output)
 
     # utils.plot_images(content_image,style_image, result_image)
 

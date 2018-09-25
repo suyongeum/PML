@@ -4,9 +4,6 @@
 
 {% block content %}
 
-    <script src="static/js/dropzone.js"></script>
-    <link href="static/css/dropzone.css" rel="stylesheet">
-
     <section class="section-main">
         <div class="container-fluid">
             <div class="row">
@@ -42,46 +39,28 @@
                     <div class="block">
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                       <div class="panel panel-default">
-                            <div class="panel-heading"><strong>Upload Files</strong> <small>Drag and drop a photo below</small></div>
+                            <div class="panel-heading"><strong>Upload a photo</strong> <small>Drag and drop to the below</small></div>
                             <div class="panel-body">
 
                                 {###################################################################### dropzone code #}
-{#                                <form action="/file-upload" class="dropzone" id="drop-zone"></form>#}
-
-                                  <form action="/upload" class="dropzone" drop-zone="" id="file-dropzone">
-                                    {%csrf_token%}
-                                    <div class="dz-message text-center alert alert-danger">
-                                        Drop your photo or click here
-                                    </div>
-
-                                  </form>
-
-                                  <div class="upload-progress text-center alert alert-warning">
-{#                                        <h3><i class="fa fa-refresh fa-spin"></i><strong> 파일을 압축중 입니다.</strong></h3>#}
-                                      Photo style changing
+                                <form action="/cnn/change/" class="dropzone" id="mydropzone">
+                                    {% csrf_token %}
+                                    <div class="fallback">
+                                    <input name="file" type="file" />
                                   </div>
-
-                                  <div class="resize-image text-center alert alert-success">
-                                      <div class="text-center">
-                                            <button type="button" class="btn btn-lg btn-primary" filename="" onclick="downImage()" id="image-down">Download</button>
-                                      </div>
-                                  </div>
-
-                                  <div id="banner-preview" class="dropzone-previews hide"></div>
-
-                                  <h3>Preview photo</h3>
-                                  <div class="image-preview">
-                                        <img src="" id="preview-img">
-                                  </div>
-
+                                </form>
+{#                                <input type="submit" class="btn btn-success" value="upload">#}
                                 {####################################################################### dropzone code #}
-
                             </div>
                       </div>
                 </div>
+                <div class="col-md-1"></div>
                 <div class="col-md-5">
+                    <div class="panel panel-default">
+                        Here I am
+                    </div>
                 </div>
                 <div class="col-md-1">
                     <div class="block">
