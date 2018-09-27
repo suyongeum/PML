@@ -7,7 +7,7 @@
       maxFilesize: 1, // MB
       thumbnailWidth: 150,
       thumbnailHeight: 150,
-      timeout: 600000,
+      timeout: 60000,
       dictDefaultMessage: "Drop a photo or click here",
 
       init: function() {
@@ -19,4 +19,8 @@
       }
     };
 
+
+
+
 })(jQuery);
+
