@@ -3,8 +3,6 @@ from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
 
 import requests
-import json
-import cv2
 
 # Create your views here.
 
@@ -22,35 +20,12 @@ def change(request):
         ###############################################################
         # # Here we know the file is in
         api_host = 'http://35.221.233.111:8000/'
-        headers = {'Content-Type': 'image/jpeg'}
-        img = cv2.imread('./bssets/inputs/'+ filename)
-        _, img_encoded = cv2.imencode('.jpg', img)
-        response = requests.post(api_host, data=img_encoded.tostring(), headers=headers)
+        headers = {'Content-Type': 'application/json'}
+        photo = './bssets/inputs/'+ filename # file name = file_name + randomNumber
 
-        return JsonResponse(response)
+        files = {'file': (filename, open(photo, 'rb'), 'image/jpeg')}
+        response = requests.post(api_host, files=files)
 
-    #     # content = './bssets/inputs/' + filename
-    #     # style   = './CNN/cnn_model/style/starry-night.jpg'
-    #     # output  = './bssets/outputs/output.jpg'
-    #     # python_command = 'c:/users/adagio/Anaconda3/envs/tensorflow/python.exe'
-    #     #
-    #     # cmd = python_command + ' ./CNN/cnn_model/run_main.py --content ' + content +  ' --style ' + style + ' --output ' + output
-    #     # print(cmd)
-    #     # os.system(cmd)
-    #     # print(returned_output)
-    #
-    #     ###############################################################
-    #     # Logic to display in the web
-    #
-    #
-    #     file_url = fs.url(filename)
-    #     print(file_url)
-    #     response = {'image': file_url}
-    #     return JsonResponse(response)
-    # else:
-    #     image = ""
-    #     response = {'image': image}
-    #     return JsonResponse(response)
-    # ########################################################################
+        return JsonResponse(response, safe=False)
 
 
